@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @author: Mr.Gong
  * @create: 2020-06-11 21:35
  **/
-public class test {
+public class MiniCoding {
     public static void main(String[] args) {
         String[] dictionary = {"i", "like", "sam", "sung", "samsung", "mobile", "ice", "cream", "man go"};
         String other = "ilikesamsungmobile";
