@@ -3,7 +3,7 @@ spring:
     host: 127.0.0.1
     username: guest
     password: guest
-      #开启消息确认模式
+    #开启消息确认模式
     publisher-returns: true
     publisher-confirms: true
     template:
@@ -21,7 +21,7 @@ spring:
           enabled: true
 
   datasource:
-    url: jdbc:mysql:replication://127.0.0.1:3307
+    url: jdbc:mysql:replication://127.0.0.1:3306
     username: root
     password: gdy430726
 

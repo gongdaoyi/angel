@@ -6,9 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @program: Conor-McGregor
- * @description:
- * @author: Mr.Gong
+ * @description:正则表达式
  * @create: 2020-06-11 21:35
  **/
 public class MiniCoding {
