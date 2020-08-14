@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @description: JDK1.8 ÐÂÌØÐÔ
+ * @description: JDK1.8 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @create: 2020-07-08 14:59
  **/
 public class JDK8 {
@@ -28,9 +28,9 @@ public class JDK8 {
 
     public static String getValue(String key) {
         Map<String, String> map = new HashMap<>();
-        map.put("1", "{\"data\":{\"id\":\"Ò»ºÅ\"}}");
-        map.put("2", "{\"data\":{\"id\":\"¶þºÅ\"}}");
-        map.put("3", "{\"data\":{\"id\":\"ÈýºÅ\"}}");
+        map.put("1", "{\"data\":{\"id\":\"Ò»ï¿½ï¿½\"}}");
+        map.put("2", "{\"data\":{\"id\":\"ï¿½ï¿½ï¿½ï¿½\"}}");
+        map.put("3", "{\"data\":{\"id\":\"ï¿½ï¿½ï¿½ï¿½\"}}");
         return map.get(key);
     }
 }

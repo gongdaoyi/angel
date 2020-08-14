@@ -1,28 +1,37 @@
 package com.angel;
 
+import com.alibaba.fastjson.JSONObject;
 import com.angel.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @description: ²âÊÔÀà
+ * @description: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @create: 2020-07-08 17:48
  **/
 public class JDK8to {
 
     public static void main(String[] args) {
+        JSONObject object = new JSONObject();
+        List<User> list = new ArrayList<>();
+        for(int i = 0 ; i <3 ;i++){
+            User user = new User ();
+            user.setName("ï¿½ï¿½"+i);
+            list.add(user);
+        }
+        object.put("test",list);
+        System.out.println(object.toJSONString());
 //        String org = "null";
-//        if (getYesOrNoNull(org)) {
-//            System.out.println("²»Îª¿Õ");
+//        if (Optional.ofNullable(org).isPresent()) {
+//            System.out.println("ï¿½ï¿½Îªï¿½ï¿½");
 //            return;
 //        }
-//        System.out.println("Îª¿Õ");
-        String str = "null";
-        System.out.println(getLength(str));
+//        System.out.println("Îªï¿½ï¿½");
+
     }
 
-    public static User getUser(User user) {//user.nameÎª¿Õ ÉèÖÃuser.name
+    public static User getUser(User user) {//user.nameÎªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½user.name
         return Optional.ofNullable(user)
                 .filter(u -> "gdy".equals(u.getName()))
                 .orElseGet(() -> {
@@ -32,23 +41,23 @@ public class JDK8to {
                 });
     }
 
-    public static List<Integer> getSquare(List<Integer> params) {//Ô­ÔªËØÆ½·½
+    public static List<Integer> getSquare(List<Integer> params) {//Ô­Ôªï¿½ï¿½Æ½ï¿½ï¿½
         return params.stream().map(p -> p * p).distinct().collect(Collectors.toList());
     }
 
-    public static long getNullNumber(List<String> params) {//Í³¼ÆÎª¿ÕµÃÊýÁ¿
+    public static long getNullNumber(List<String> params) {//Í³ï¿½ï¿½Îªï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
         return params.stream().filter(str -> str.isEmpty()).count();
     }
 
-    public static String getUserOrgName(User user) {//org_name Îª¿Õ ²»Îª¿ÕÁ½ÖÖÊä³ö
+    public static String getUserOrgName(User user) {//org_name Îªï¿½ï¿½ ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         return Optional.ofNullable(user).map(u -> u.getOrg()).map(org -> org.getOrg_name()).orElse("schoolIsNull");
     }
 
-    public static boolean getYesOrNoNull(String params) {//×Ö·û´®Îªnull
+    public static boolean getYesOrNoNull(String params) {//ï¿½Ö·ï¿½ï¿½ï¿½Îªnull
         return Optional.ofNullable(params).isPresent();
     }
 
-    public static int getLength(String str) {//×Ö·û´®ÅÐ¿Õ
+    public static int getLength(String str) {//ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½
 //        if(str == null){
 //            return 0 ;
 //        }
