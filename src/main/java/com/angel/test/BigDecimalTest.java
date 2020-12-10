@@ -9,7 +9,8 @@ import java.text.SimpleDateFormat;
  **/
 public class BigDecimalTest {
     public static void main(String[] args) throws ParseException {
-        System.out.println(timeDifference("10:30", "11:45")); //1.3
+        // 1.3
+        System.out.println(timeDifference("10:30", "11:45"));
     }
 
     public static String timeDifference(String startTime, String endTime) throws ParseException {
