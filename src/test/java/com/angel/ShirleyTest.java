@@ -19,7 +19,7 @@ public class ShirleyTest {
     }
 
     /**
-     * test2
+     * test3
      * 检查幂等性
      */
     private static void checkResult() {
