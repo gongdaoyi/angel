@@ -36,10 +36,10 @@ public class MiniTest {
     }
 
     /**
-     *The program need to support converting the digits from 0 to 99 into letters
+     * The program need to support converting the digits from 0 to 99 into letters
      */
     @Test
-    public void testTwo (){
+    public void testTwo() {
         log.info("Answer to question 2 : {}", miniCode.translationNumber(99));
     }
 

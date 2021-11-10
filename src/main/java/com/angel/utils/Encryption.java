@@ -1,13 +1,13 @@
 package com.angel.utils;
 
+import org.apache.commons.codec.binary.Base64OutputStream;
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.binary.Base64OutputStream;
-import org.apache.commons.codec.digest.DigestUtils;
 
 public class Encryption {
     public final static String MD5 = "MD5";

@@ -8,7 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -28,7 +29,7 @@ public class MiniCode {
     }
 
     /**
-     *The program need to support converting the digits from 0 to 99 into letters
+     * The program need to support converting the digits from 0 to 99 into letters
      */
     public String translationNumber(int param) {
         if (param == 1 || param == 0) {

@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationEvent;
 
 /**
  * 钉钉审批流事件。
- *
+ * <p>
  * 当整个审批流结束时，触发事件通知。
  */
 public class ProcessEvent extends ApplicationEvent {

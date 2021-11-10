@@ -2,6 +2,7 @@ package com.angel.config;
 
 /**
  * 钉钉审批中的常量定义类
+ *
  * @author HP
  */
 public interface DingDingConstant {

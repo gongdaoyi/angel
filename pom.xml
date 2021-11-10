@@ -19,17 +19,41 @@
     </properties>
 
     <dependencies>
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.amazonaws</groupId>-->
+        <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
+        <!--            <version>1.12.44</version>-->
+        <!--        </dependency>-->
 
-        <!-- 钉钉 -->
+
+        <!--        &lt;!&ndash; 钉钉 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.taobao.top</groupId>-->
+        <!--            <artifactId>top-api-sdk-dev</artifactId>-->
+        <!--            <version>ding-open-mc-SNAPSHOT</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.taobao.top</groupId>-->
+        <!--            <artifactId>lippi-oapi-encrpt</artifactId>-->
+        <!--            <version>dingtalk-SNAPSHOT</version>-->
+        <!--        </dependency>-->
+
         <dependency>
-            <groupId>com.taobao.top</groupId>
-            <artifactId>top-api-sdk-dev</artifactId>
-            <version>ding-open-mc-SNAPSHOT</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.3.1.tmp</version>
         </dependency>
         <dependency>
-            <groupId>com.taobao.top</groupId>
-            <artifactId>lippi-oapi-encrpt</artifactId>
-            <version>dingtalk-SNAPSHOT</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.3.1.tmp</version>
+        </dependency>
+
+        <!-- data -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <!-- SHA MD5等加密 -->
@@ -79,6 +103,26 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.20</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
