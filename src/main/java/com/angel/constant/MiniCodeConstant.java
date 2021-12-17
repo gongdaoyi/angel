@@ -1,4 +1,4 @@
-package com.angel.config;
+package com.angel.constant;
 
 public interface MiniCodeConstant {
 

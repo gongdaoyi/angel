@@ -4,20 +4,18 @@ import com.angel.entity.TaxIdInfoCheck;
 import com.angel.model.ExcelDto;
 import com.angel.service.ITaxIdInfoCheckService;
 import com.angel.utils.EasyPoiUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/import")
+@RequestMapping("/taxIdInfoCheck")
 public class TaxIdInfoCheckController {
 
     private static final Logger logger = LoggerFactory.getLogger(TaxIdInfoCheckController.class);
@@ -25,7 +23,14 @@ public class TaxIdInfoCheckController {
     @Autowired
     ITaxIdInfoCheckService taxIdInfoCheckService;
 
-    @PostMapping("/excel")
+    @GetMapping("/query")
+    public List<TaxIdInfoCheck> query() {
+        return taxIdInfoCheckService.
+                list(Wrappers.<TaxIdInfoCheck>lambdaQuery().
+                        eq(TaxIdInfoCheck::getNationality, "CHN"));
+    }
+
+    @PostMapping("/importExcel")
     public String importExcel(@RequestParam(value = "file") MultipartFile file) {
 
         List<ExcelDto> excelDtoList = EasyPoiUtils.importExcel(file, 0, 1, ExcelDto.class);
@@ -55,7 +60,7 @@ public class TaxIdInfoCheckController {
         try {
             taxIdInfoCheckService.saveBatch(saves);
         } catch (Exception e) {
-            logger.error("批量插入异常：{}", e);
+            logger.error("批量插入异常: ", e);
         }
 
         return "succeed";

@@ -1,11 +1,13 @@
 package com.angel;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,7 +17,52 @@ public class ShirleyTest {
     private static final Logger log = LoggerFactory.getLogger(ShirleyTest.class);
 
     public static void main(String[] args) {
-        checkResult();
+        String str = "2";
+        if (str.isEmpty()){
+            System.out.println("kong");
+        } else {
+            System.out.println("not kong");
+        }
+    }
+
+    /**
+     * @param src 目标串
+     * @param len 处理后长度
+     * @param ch  填充字符
+     * @return 处理后串
+     */
+    public static String padLeft(String src, int len, char ch) {
+        int diff = len - src.length();
+        if (diff <= 0) {
+            return src;
+        }
+
+        char[] charr = new char[len];
+        System.arraycopy(src.toCharArray(), 0, charr, diff, src.length());
+        for (int i = 0; i < diff; i++) {
+            charr[i] = ch;
+        }
+        return new String(charr);
+    }
+
+    private static JSONArray testJSON() {
+
+        JSONObject three = new JSONObject();
+        three.put("data", "20210102");
+        three.put("time", "91050");
+
+        JSONObject four = new JSONObject();
+        four.put("data", "20210102");
+        four.put("time", "101050");
+
+        JSONArray ary = new JSONArray();
+        ary.add(four);
+        ary.add(three);
+
+        // 对jsonarray排序
+        ary.sort(Comparator.comparing(obj -> ((JSONObject) obj).getString("age")));
+
+        return ary;
     }
 
     /**

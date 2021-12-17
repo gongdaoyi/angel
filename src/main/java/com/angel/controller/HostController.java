@@ -1,32 +1,36 @@
 package com.angel.controller;
 
-import com.angel.dict.ActionType;
 import com.angel.utils.FileUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
-@RequestMapping("shirley")
+@RequestMapping("host")
 public class HostController {
 
-    @PostMapping("enum")
-    public void importExcel(@RequestParam(value = "shirley", defaultValue = "0") Double shirley) throws Exception {
-        System.out.println(shirley);
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
+    @GetMapping("/redis")
+    public String redis(String key) {
+        Map<Object, Object> entries = redisTemplate.opsForHash().entries("allbranch:1001");
+        String value = (String)redisTemplate.opsForHash().get("allbranch:1001", "level3");
+        return value;
     }
 
     @PostMapping("upload/file")
-    public void importExcel(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file,
-                            @RequestParam String filePath, @RequestParam String fileName) throws Exception {
+    public void importExcel(HttpServletRequest request,
+                            @RequestParam(value = "file") MultipartFile file,
+                            @RequestParam String filePath,
+                            @RequestParam String fileName) throws Exception {
+
         FileUtils.uploadFile(file.getBytes(), filePath, fileName);
     }
 
-    public void test () {
-        System.out.println("进来了喔");
-    }
 
 }

@@ -1,4 +1,4 @@
-package com.angel.dict;
+package com.angel.constant;
 
 public enum ActionType {
     /**
