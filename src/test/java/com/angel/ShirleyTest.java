@@ -16,13 +16,16 @@ public class ShirleyTest {
 
     private static final Logger log = LoggerFactory.getLogger(ShirleyTest.class);
 
-    public static void main(String[] args) {
-        String str = "2";
-        if (str.isEmpty()){
-            System.out.println("kong");
-        } else {
-            System.out.println("not kong");
-        }
+    public static void main(String[] args) throws InterruptedException {
+        String a = "中华人名共和国: 中国台湾";
+
+        String substring = a.substring(a.indexOf(":") + 1);
+
+        System.out.println(substring);
+    }
+
+    public static void testBean(String vipId, Integer userAge) {
+        System.out.println(vipId + userAge);
     }
 
     /**

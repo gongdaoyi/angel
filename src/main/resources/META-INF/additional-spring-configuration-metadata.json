@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "projects.list",
+      "type": "java.lang.String",
+      "description": "meta-inf"
+    }
+  ]
+}
