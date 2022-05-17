@@ -1,4 +1,4 @@
-package com.angel.config;
+package com.angel.constant;
 
 /**
  * 钉钉审批中的常量定义类

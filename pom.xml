@@ -63,11 +63,10 @@
             <version>1.12</version>
         </dependency>
 
-        <!-- mysql 驱动依赖 -->
+        <!-- 添加MySQL数据库驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.18</version>
         </dependency>
 
         <!-- alibaba/JSON -->
@@ -101,7 +100,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>1.18.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -114,15 +113,12 @@
             <artifactId>easypoi-base</artifactId>
             <version>3.0.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
 
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>1.4.7.RELEASE</version>
         </dependency>
     </dependencies>
 

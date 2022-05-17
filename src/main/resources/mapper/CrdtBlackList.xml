@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.angel.mapper.CrdtBlackListMapper">
+
+    <select id="listCrdtBlackList" resultType="com.alibaba.fastjson.JSONObject">
+        select * from crdtblacklist
+        <where>
+            <if test="clientId == str">
+                and client_id = #{clientId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

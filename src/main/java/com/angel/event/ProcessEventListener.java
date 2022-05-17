@@ -1,6 +1,6 @@
 package com.angel.event;
 
-import com.angel.config.DingDingConstant;
+import com.angel.constant.DingDingConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;

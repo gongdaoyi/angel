@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gf.nbop.busin.userx.dao.GfServiceMapper">
+
+    <!-- 里面有使用正则判断是否纯数字 "\\d+" 也有字符串比较 -->
+
+    <sql id="queryDefaultLanguageColumn">
+        a.service_id, a.service_name, a.password_type, a.access_level, a.serv_busi_type, a.serv_busi_prop,
+        a.serv_flag_str, a.reststart_time, a.restend_time, a.en_sys_status, a.scan_task_type, a.busin_type
+    </sql>
+
+    <sql id="queryColumn">
+        a.service_id,
+        ifnull((select c.trans_content
+        from languagetrans c
+        where c.table_name = 'gfuser.gfservice'
+        and concat(a.service_id) = c.id_index
+        and c.language = 0
+        and c.column_name = 'service_name'), a.service_name) as service_name,
+        a.password_type,
+        a.access_level,
+        a.serv_busi_type,
+        a.serv_busi_prop,
+        a.serv_flag_str,
+        a.reststart_time,
+        a.restend_time,
+        a.en_sys_status,
+        a.scan_task_type
+    </sql>
+
+    <sql id="qryCondition">
+        <where>
+            <choose>
+                <!-- 注意使用单括号 -->
+                <when test='serviceIdB != "120031" and serviceIdB != "0"'>
+                    <choose>
+                        <when test="serviceIdB.matches(regex)">
+                            a.service_id = #{serviceIdB}
+                        </when>
+                        <otherwise>
+                            a.service_name like concat('%', #{serviceIdB}, '%')
+                        </otherwise>
+                    </choose>
+                </when>
+                <otherwise>
+                    0 = #{serviceIdB}
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="listByServiceIdOrName" resultType="com.alibaba.fastjson.JSONObject">
+        select
+        <choose>
+            <when test="language == defaultLanguage">
+                <include refid="queryDefaultLanguageColumn"/>
+            </when>
+            <otherwise>
+                <include refid="queryColumn"/>
+            </otherwise>
+        </choose>
+        from gfuser.gfservice a
+        <include refid="qryCondition"/>
+        order by ${order}
+        limit #{startPoi}, #{pageSize}
+    </select>
+
+    <select id="countByServiceIdOrName" resultType="int">
+        select count(a.service_id)
+        from gfuser.gfservice a
+        <include refid="qryCondition"/>
+    </select>
+</mapper>

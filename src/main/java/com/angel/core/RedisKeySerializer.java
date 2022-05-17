@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.angel.redis;
+package com.angel.core;
 
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.core.convert.ConversionService;
@@ -32,6 +32,7 @@ import java.util.Objects;
  * spring cache中的简单基本类型直接使用 StringRedisSerializer 会有问题
  * </p>
  *
+ * @author L.cm
  */
 public class RedisKeySerializer implements RedisSerializer<Object> {
     private final Charset charset;

@@ -1,9 +1,11 @@
 package com.angel.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Org {
 
+    @NotNull
     private String orgName;
 
     private String orgCode;
