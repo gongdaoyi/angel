@@ -2,6 +2,7 @@ package com.angel.controller;
 
 import com.angel.entity.TaxIdInfoCheck;
 import com.angel.entity.WhiteList;
+import com.angel.model.Shirley;
 import com.angel.service.ICrdtBlackListService;
 import com.angel.service.ITaxIdInfoCheckService;
 import com.angel.service.IWhiteListService;
@@ -44,8 +45,14 @@ public class HostController {
     ITaxIdInfoCheckService taxIdInfoCheckService;
     @Autowired
     ICrdtBlackListService crdtBlackListService;
+
     @Value("#{'${list.type}'.split(',')}")
     private List<String> listType;
+    @GetMapping("/shirley")
+    public String shirley(@RequestBody Shirley shirley) {
+
+        return shirley.toString();
+    }
 
     @GetMapping("listCrdtBlackList")
     public Object listCrdtBlackList(@RequestParam String clientId, @RequestParam String str) {

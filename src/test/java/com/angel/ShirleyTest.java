@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,11 +18,11 @@ public class ShirleyTest {
     private static final Logger log = LoggerFactory.getLogger(ShirleyTest.class);
 
     public static void main(String[] args) throws InterruptedException {
-        String a = "中华人名共和国: 中国台湾";
-
-        String substring = a.substring(a.indexOf(":") + 1);
-
-        System.out.println(substring);
+        int a = 0;
+        for (int i =0 ; i <10 ; i ++) {
+            a = a +1;
+        }
+System.out.println(a);
     }
 
     public static void testBean(String vipId, Integer userAge) {
