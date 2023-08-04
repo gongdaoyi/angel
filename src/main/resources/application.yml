@@ -20,6 +20,9 @@ spring:
     port: 6379
 list:
   type: 1,2,3,4
+splitPage:
+  ocr:
+    tempPath: C:\Users\angle\working\image\page\
 
 
 

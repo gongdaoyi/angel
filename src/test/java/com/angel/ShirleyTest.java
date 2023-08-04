@@ -5,24 +5,71 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ShirleyTest {
 
     private static final Logger log = LoggerFactory.getLogger(ShirleyTest.class);
 
-    public static void main(String[] args) throws InterruptedException {
-        int a = 0;
-        for (int i =0 ; i <10 ; i ++) {
-            a = a +1;
+    public static void main(String[] args) throws Exception {
+        String str = " d; ";
+        str = str.replace(",", ";").trim();
+        System.out.println(str);
+        List<String> split = Arrays.asList(str.split(";", -1));
+        System.out.println("[" + split.size() + "]");
+
+        str = split.stream().filter(v -> !v.contains("a")).collect(Collectors.joining(";"));
+        System.out.println("[str=" + str + "]");
+    }
+
+    /**
+     * 获取当前月第一天
+     */
+    public static String getFirstDayOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        // 获取某月最小天数
+        int firstDay = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+        // 设置日历中月份的最小天数
+        calendar.set(Calendar.DAY_OF_MONTH, firstDay);
+        // 格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        return sdf.format(calendar.getTime());
+    }
+
+
+    /**
+     * 获取当前月最后一天
+     */
+    public static String getLastDayOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        // 获取某月最大天数
+        int lastDay;
+        //2月的平年瑞年天数
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if (month == 2) {
+            lastDay = calendar.getLeastMaximum(Calendar.DAY_OF_MONTH);
+        } else {
+            lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         }
-System.out.println(a);
+        // 设置日历中月份的最大天数
+        calendar.set(Calendar.DAY_OF_MONTH, lastDay);
+        // 格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        return sdf.format(calendar.getTime());
+    }
+
+    private static BigDecimal getBigDecimal() {
+        return new BigDecimal("9.111111111");
+    }
+
+    public static Object toUpperCase(Object obj) {
+        return obj.toString().toUpperCase();
     }
 
     public static void testBean(String vipId, Integer userAge) {

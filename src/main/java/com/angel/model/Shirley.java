@@ -1,11 +1,32 @@
 package com.angel.model;
 
-import lombok.Data;
-
-@Data
 public class Shirley {
 
-    private User user;
+    private String Image;
 
-    private VipUser vipUser;
+    private String vipUser;
+
+    @Override
+    public String toString() {
+        return "Shirley{" +
+                "Image='" + Image + '\'' +
+                ", vipUser='" + vipUser + '\'' +
+                '}';
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public String getVipUser() {
+        return vipUser;
+    }
+
+    public void setVipUser(String vipUser) {
+        this.vipUser = vipUser;
+    }
 }

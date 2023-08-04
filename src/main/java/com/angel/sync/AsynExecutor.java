@@ -25,16 +25,13 @@ public class AsynExecutor {
     private AtomicInteger resultNum = new AtomicInteger(0);
 
     public static void init(int size) {
-        if (isStarted) {
-        } else {
+        if (!isStarted) {
             synchronized (lockObj) {
-                if (isStarted) {
-                } else {
+                if (!isStarted) {
                     if (size <= 0) {
                         size = 50;
                     }
-                    service = MoreExecutors.listeningDecorator(new ThreadPoolExecutor(size, size, 60L, TimeUnit.SECONDS,
-                            new SynchronousQueue<Runnable>(), new CallerRunsPolicy()));
+                    service = MoreExecutors.listeningDecorator(new ThreadPoolExecutor(size, size, 60L, TimeUnit.SECONDS, new SynchronousQueue<>(), new CallerRunsPolicy()));
                     isStarted = true;
                 }
             }
@@ -97,6 +94,9 @@ public class AsynExecutor {
         return resultMap.get(index);
     }
 
+    /**
+     * 获取当前状态
+     */
     public ExecutorStatus getExecutorCurrentStatus() {
         Collection<AsynExecutorResult> resultColl = resultMap.values();
         for (AsynExecutorResult result : resultColl) {
@@ -107,6 +107,11 @@ public class AsynExecutor {
         return ExecutorStatus.SUCESS;
     }
 
+    /**
+     * 获取最终状态，同步等待直到出现最终状态
+     *
+     * @return 最终状态
+     */
     public ExecutorStatus getExecutorFinalStatus() {
         if (resultNum.get() != 0) {
             return ExecutorStatus.FAIL;

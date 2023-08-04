@@ -1,14 +1,23 @@
 package com.angel.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.angel.entity.TaxIdInfoCheck;
 import com.angel.entity.WhiteList;
-import com.angel.model.Shirley;
+import com.angel.model.User;
 import com.angel.service.ICrdtBlackListService;
 import com.angel.service.ITaxIdInfoCheckService;
 import com.angel.service.IWhiteListService;
+import com.angel.service.TestService;
+import com.angel.service.impl.SyncServiceImpl;
+import com.angel.sync.AsynExecutor;
+import com.angel.sync.AsynExecutorResult;
+import com.angel.sync.ExecutorStatus;
 import com.angel.utils.FileUtils;
+import com.angel.utils.PDFUtils;
 import com.angel.utils.RedisUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,16 +27,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
-@RequestMapping("host")
+@RequestMapping("/host")
 public class HostController {
+
+    private static final Logger log = LoggerFactory.getLogger(HostController.class);
 
     @Autowired
     RedisUtils redisUtils;
@@ -46,18 +56,85 @@ public class HostController {
     @Autowired
     ICrdtBlackListService crdtBlackListService;
 
+    @Autowired
+    TestService testService;
+
     @Value("#{'${list.type}'.split(',')}")
     private List<String> listType;
-    @GetMapping("/shirley")
-    public String shirley(@RequestBody Shirley shirley) {
 
-        return shirley.toString();
+    @Value("${splitPage.ocr.tempPath}")
+    private String tempPath;
+
+    @Autowired
+    private SyncServiceImpl syncService;
+
+    @Autowired
+    private PDFUtils pdfUtils;
+
+    /**
+     * OCR识别
+     */
+    @PostMapping("/ocr")
+    public List<String> ocr(@RequestParam(value = "file") MultipartFile file,
+                            int batchNumber) throws IOException {
+        List<String> result = new ArrayList<>();
+
+        List<String> tempFileNameList = pdfUtils.pageSpilt(file.getInputStream(), new File(tempPath), batchNumber);
+
+        try {
+            AsynExecutor asynExecutor = new AsynExecutor();
+
+            List<Integer> indexList = new ArrayList<>();
+            for (String tempFileName : tempFileNameList) {
+                indexList.add(asynExecutor.submitIndex(() -> this.syncOrc(tempFileName)));
+            }
+
+            asynExecutor.getExecutorFinalStatus();
+
+            ArrayList<AsynExecutorResult> allResultList = asynExecutor.getAllResultList();
+            for (Integer index : indexList) {
+                AsynExecutorResult<String> asynExecutorResult = allResultList.get(index);
+                if (ExecutorStatus.SUCESS == asynExecutorResult.getStatus()) {
+                    result.add(asynExecutorResult.getResult());
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("OCR识别异常");
+        } finally {
+            // 资源闭环, 如果发生异常。 服务器会被大量临时文件堆积爆满
+            for (String tempFileName : tempFileNameList) {
+                File tempFile = new File(tempPath + tempFileName);
+                tempFile.delete();
+            }
+        }
+
+        return result;
     }
 
-    @GetMapping("listCrdtBlackList")
-    public Object listCrdtBlackList(@RequestParam String clientId, @RequestParam String str) {
+    private String syncOrc(String tempFile) throws InterruptedException {
+        Thread.sleep(3000);
 
-        return crdtBlackListService.listCrdtBlackList(clientId, str);
+        return tempFile;
+    }
+
+
+    @PostMapping("/send")
+    public String sendRabbitMQ() {
+
+        syncService.sendRabbitMQ();
+
+        return "发送成功";
+    }
+
+    @PostMapping("/update")
+    public int update(@RequestBody User user) {
+
+        return crdtBlackListService.update(user);
+    }
+
+    @GetMapping("qryMysql")
+    public List<JSONObject> listCrdtBlackList(@RequestParam String clientId) {
+        return crdtBlackListService.listCrdtBlackList(clientId);
     }
 
     @GetMapping("/redis")

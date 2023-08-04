@@ -15,11 +15,9 @@ import java.util.Objects;
  */
 public class RedisLock {
 
-    private static Logger logger = LoggerFactory.getLogger(RedisLock.class);
-
-    private RedisTemplate<String, String> redisTemplate;
-
     private static final String PREFIX_KEY = "REDIS_LOCK:";
+    private static final Logger logger = LoggerFactory.getLogger(RedisLock.class);
+    private final RedisTemplate<String, String> redisTemplate;
 
     public RedisLock(RedisTemplate<String, String> redisTemplate) {
         super();
