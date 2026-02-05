@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -19,13 +19,52 @@
     </properties>
 
     <dependencies>
+        <!--        &lt;!&ndash; 模型上下文协议SDK &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.modelcontextprotocol.sdk</groupId>-->
+        <!--            <artifactId>mcp</artifactId>-->
+        <!--        </dependency>-->
+
+        <!-- httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
+        <!-- 显式引入 Log4j -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+
+        <!-- Excel文件处理工具 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
+        <!-- OpenCC 中文简体-繁体转换 -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>opencc4j</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
         <!-- pdf 分页工具 -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox-app</artifactId>
             <version>2.0.21</version>
         </dependency>
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 &ndash;&gt;-->
+        <!--         s3文件服务器-->
         <!--        <dependency>-->
         <!--            <groupId>com.amazonaws</groupId>-->
         <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
@@ -33,7 +72,7 @@
         <!--        </dependency>-->
 
 
-        <!--        &lt;!&ndash; 钉钉 &ndash;&gt;-->
+        <!--        钉钉-->
         <!--        <dependency>-->
         <!--            <groupId>com.taobao.top</groupId>-->
         <!--            <artifactId>top-api-sdk-dev</artifactId>-->
@@ -44,6 +83,13 @@
         <!--            <artifactId>lippi-oapi-encrpt</artifactId>-->
         <!--            <version>dingtalk-SNAPSHOT</version>-->
         <!--        </dependency>-->
+
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.15.2</version>
+        </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -109,10 +155,16 @@
             <version>1.18.10</version>
             <scope>test</scope>
         </dependency>
+        <!-- Mockito 用于单元测试Mock -->
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.5.20</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>cn.afterturn</groupId>
@@ -126,9 +178,28 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>1.4.7.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- swagger 相关3个 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.28.0-GA</version>
         </dependency>
     </dependencies>
 
@@ -137,6 +208,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.9.RELEASE</version>
             </plugin>
         </plugins>
     </build>
