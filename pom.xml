@@ -19,12 +19,6 @@
     </properties>
 
     <dependencies>
-        <!--        &lt;!&ndash; 模型上下文协议SDK &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.modelcontextprotocol.sdk</groupId>-->
-        <!--            <artifactId>mcp</artifactId>-->
-        <!--        </dependency>-->
-
         <!-- httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -51,39 +45,12 @@
             <version>5.2.3</version>
         </dependency>
 
-        <!-- OpenCC 中文简体-繁体转换 -->
-        <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>opencc4j</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
         <!-- pdf 分页工具 -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox-app</artifactId>
             <version>2.0.21</version>
         </dependency>
-        <!--         s3文件服务器-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.amazonaws</groupId>-->
-        <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
-        <!--            <version>1.12.44</version>-->
-        <!--        </dependency>-->
-
-
-        <!--        钉钉-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.taobao.top</groupId>-->
-        <!--            <artifactId>top-api-sdk-dev</artifactId>-->
-        <!--            <version>ding-open-mc-SNAPSHOT</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.taobao.top</groupId>-->
-        <!--            <artifactId>lippi-oapi-encrpt</artifactId>-->
-        <!--            <version>dingtalk-SNAPSHOT</version>-->
-        <!--        </dependency>-->
-
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -96,23 +63,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.1.tmp</version>
         </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>3.3.1.tmp</version>
-        </dependency>
 
-        <!-- data -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!-- SHA MD5等加密 -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.12</version>
+            <version>1.18.10</version>
         </dependency>
 
         <!-- 添加MySQL数据库驱动 -->
@@ -127,12 +83,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.68</version>
         </dependency>
-        <!-- rabbitmq -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -149,12 +99,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Mockito 用于单元测试Mock -->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -166,25 +110,13 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-base</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>1.4.7.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!-- swagger 相关3个 -->
+        <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -196,10 +128,10 @@
             <version>2.7.0</version>
         </dependency>
 
+        <!-- Spring Security - 用于Swagger登录保护 -->
         <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.28.0-GA</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 
@@ -209,6 +141,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.9.RELEASE</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

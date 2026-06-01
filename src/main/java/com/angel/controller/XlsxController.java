@@ -19,13 +19,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Excel处理控制器
+ *
+ * <p>提供Excel文件的读取和处理功能</p>
+ *
+ * @author Angel Development Team
+ * @version 1.0.0
+ * @since 2025-01-01
+ */
 @Log4j2
 @RestController
 @RequestMapping("/xlsx")
 public class XlsxController {
 
+    private final IRolesService rolesService;
+
     @Autowired
-    IRolesService rolesService;
+    public XlsxController(IRolesService rolesService) {
+        this.rolesService = rolesService;
+    }
 
     @PostMapping("/checkRights")
     public void checkRights() {
@@ -34,21 +47,19 @@ public class XlsxController {
 
         try (FileInputStream fis = new FileInputStream(oldFile);
              XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
-            Sheet sheet = workbook.getSheetAt(0);  // 获取第一个工作表
+            Sheet sheet = workbook.getSheetAt(0);
 
-            // 获取第一行，以便检查列标题（可选）
             Row headerRow = sheet.getRow(0);
             if (headerRow != null) {
-                System.out.println("列标题: " +
-                        headerRow.getCell(0).getStringCellValue() + ", " +  // 第一列标题
-                        headerRow.getCell(1).getStringCellValue() + ", " +  // 第二列标题
-                        headerRow.getCell(2).getStringCellValue() + ", " +  // 第三列标题
-                        headerRow.getCell(3).getStringCellValue());         // 第四列标题
+                log.info("列标题: {}, {}, {}, {}",
+                        headerRow.getCell(0).getStringCellValue(),
+                        headerRow.getCell(1).getStringCellValue(),
+                        headerRow.getCell(2).getStringCellValue(),
+                        headerRow.getCell(3).getStringCellValue());
             }
 
-            // 遍历每一行，从第二行开始（跳过标题行）
             Iterator<Row> rowIterator = sheet.iterator();
-            rowIterator.next();  // 跳过第一行（标题行）
+            rowIterator.next();
 
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
@@ -87,38 +98,30 @@ public class XlsxController {
                     rolesList.forEach(role -> remark.append(role).append("、"));
 
                     if (remarkCell == null) {
-                        remarkCell = row.createCell(8);  // 如果单元格为空，创建该单元格
-                    }
-                    remarkCell.setCellValue(remark.toString());
-
-                    if (remarkCell == null) {
-                        remarkCell = row.createCell(8);  // 如果单元格为空，创建该单元格
+                        remarkCell = row.createCell(8);
                     }
                     remarkCell.setCellValue(remark.toString());
                 }
             }
 
-            // 保存修改后的工作簿到输出文件
             try (FileOutputStream fos = new FileOutputStream(newFile)) {
                 workbook.write(fos);
             }
 
-            System.out.println("处理完成，结果保存到 " + newFile);
+            log.info("处理完成，结果保存到 {}", newFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Excel处理失败", e);
         }
     }
 
     public List<Integer> compareStrings(String a, String b) {
         List<Integer> diffIndexes = new ArrayList<>();
 
-        // 检查两个字符串的长度是否一致
         int length = Math.min(a.length(), b.length());
 
-        // 比较每一位
         for (int i = 0; i < length; i++) {
             if (a.charAt(i) != b.charAt(i)) {
-                diffIndexes.add(i + 1);  // 记录不同的位置
+                diffIndexes.add(i + 1);
             }
         }
 

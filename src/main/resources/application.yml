@@ -1,18 +1,7 @@
-server:
-  port: 8080
-
 logging:
   level:
     com:
       angel: INFO
-
-    org:
-      apache:
-        catalina:
-          startup:
-            Tomcat: DEBUG
-          logger:
-            FileLogger: DEBUG
 
 spring:
   datasource:
@@ -23,36 +12,18 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT%2B8
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-    # 消息确认（ACK）
-    publisher-returns: true #确认消息已发送到队列(Queue)
-    publisher-confirms: true #确认消息已发送到交换机(Exchange)
   redis:
     host: 127.0.0.1
     port: 6379
   servlet:
     multipart:
-      max-request-size: 200MB #请求参数文件大小上限
-      max-file-size: 200MB #spring文件大小上限
+      max-request-size: 200MB
+      max-file-size: 200MB
 
-list:
-  type: 1,2,3,4
-ocr:
-  splitPage:
-    tempPath: C:\A-Work\image\
-  recognize: # 多页识别
-    info: '{"replace":{" ":"","，":",","。":".","：":":"},"multiPage":"Y"}'
-    regex: '{"root":"(?<datas>.*)","datas":"协议编号:(?<protocolNumber>[0-9]+).*?丙方:(?<partyC>.*?银行)[^协议编号]"}'
-    response: '{"datas":[{"protocolNumber":"datas.protocolNumber","partyC":"datas.partyC"}]}'
+video:
+  output:
+    dir: ./uploads
 
-# MyBatis配置
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.angel.entity
-
-
-

@@ -2,6 +2,7 @@ package com.angel.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.angel.entity.RequestVoiceContext;
+import lombok.extern.log4j.Log4j2;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+@Log4j2
 @Service
 public class VoiceService {
     // 存储每个请求的上下文信息
@@ -84,13 +86,13 @@ public class VoiceService {
             json_body.put("id", 1);
 
             String responseBody = this.sendJsonHttpPost(url, json_body.toJSONString(), requestId);
-            String strResponseBody = new String(decoder.decode(responseBody), "UTF-8");
+            String strResponseBody = new String(decoder.decode(responseBody), StandardCharsets.UTF_8);
             JSONObject json = JSONObject.parseObject(strResponseBody);
-            System.out.println("SessionBegin:" + JSONObject.toJSONString(json, true));
+            log.debug("SessionBegin: {}", JSONObject.toJSONString(json, true));
 
             context.setSid(json.getJSONObject("result").getString("sid"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SessionBegin failed", e);
             throw new RuntimeException("SessionBegin failed", e);
         }
     }
@@ -137,17 +139,17 @@ public class VoiceService {
                 json_body.put("id", 2);
 
                 String responseBody = this.sendJsonHttpPost(url, json_body.toJSONString(), requestId);
-                String strResponseBody = new String(decoder.decode(responseBody), "UTF-8");
+                String strResponseBody = new String(decoder.decode(responseBody), StandardCharsets.UTF_8);
                 JSONObject json = JSONObject.parseObject(strResponseBody);
 
                 // 判断引擎返回pgs是否为1，为1表示有识别结果可获取
                 if (json.getJSONObject("result").getInteger("pgs") == 1) {
                     context.appendResult(json.getJSONObject("result").getString("result"));
-                    System.out.println("AudioWrite:" + JSONObject.toJSONString(json, true));
+                    log.debug("AudioWrite: {}", JSONObject.toJSONString(json, true));
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("AudioWrite failed", e);
             throw new RuntimeException("AudioWrite failed", e);
         }
     }
@@ -178,13 +180,13 @@ public class VoiceService {
                 json_body.put("id", 3);
 
                 String responseBody = this.sendJsonHttpPost(url, json_body.toJSONString(), requestId);
-                String strResponseBody = new String(decoder.decode(responseBody), "UTF-8");
+                String strResponseBody = new String(decoder.decode(responseBody), StandardCharsets.UTF_8);
                 JSONObject json = JSONObject.parseObject(strResponseBody);
 
                 // 判断引擎返回pgs是否为1，为1表示有识别结果可获取
                 if (json.getJSONObject("result").getInteger("pgs") == 1) {
                     context.appendResult(json.getJSONObject("result").getString("result"));
-                    System.out.println("GetResult:" + JSONObject.toJSONString(json, true));
+                    log.debug("GetResult: {}", JSONObject.toJSONString(json, true));
                 }
 
                 if (5 == json.getJSONObject("result").getInteger("recStatus")) {
@@ -192,9 +194,9 @@ public class VoiceService {
                 }
             }
 
-            System.out.println("allResult:" + context.getAllResult());
+            log.debug("allResult: {}", context.getAllResult());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("GetResult failed", e);
             throw new RuntimeException("GetResult failed", e);
         }
     }
@@ -224,11 +226,11 @@ public class VoiceService {
             json_body.put("id", 4);
 
             String responseBody = this.sendJsonHttpPost(url, json_body.toJSONString(), requestId);
-            String strResponseBody = new String(decoder.decode(responseBody), "UTF-8");
+            String strResponseBody = new String(decoder.decode(responseBody), StandardCharsets.UTF_8);
             JSONObject json = JSONObject.parseObject(strResponseBody);
-            System.out.println("SessionEnd:" + JSONObject.toJSONString(json, true));
+            log.debug("SessionEnd: {}", JSONObject.toJSONString(json, true));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("SessionEnd failed", e);
             throw new RuntimeException("SessionEnd failed", e);
         } finally {
             // 处理完成后移除上下文
@@ -266,7 +268,7 @@ public class VoiceService {
                 httpPost.addHeader("Cookie", cookie);
             }
 
-            httpPost.setEntity(new StringEntity(json, Charset.forName("UTF-8")));
+            httpPost.setEntity(new StringEntity(json, StandardCharsets.UTF_8));
 
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(httpPost);
@@ -290,7 +292,7 @@ public class VoiceService {
 
             return responseInfo;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("HTTP POST request failed", e);
             return null;
         } finally {
             try {
@@ -298,7 +300,7 @@ public class VoiceService {
                     response.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.warn("Failed to close HTTP response", e);
             }
         }
     }
@@ -323,7 +325,7 @@ public class VoiceService {
                 buffers.add(new byte[0]);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to read multipart file", e);
         }
         return buffers;
     }

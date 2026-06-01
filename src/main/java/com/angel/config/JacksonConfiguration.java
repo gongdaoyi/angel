@@ -1,4 +1,4 @@
-package com.angel;
+package com.angel.config;
 
 import com.angel.utils.BladeJavaTimeModule;
 import com.fasterxml.jackson.core.JsonParser;
@@ -107,7 +107,6 @@ public class JacksonConfiguration {
 
         // 自定义日期格式化模块
         objectMapper.registerModule(new BladeJavaTimeModule());
-        objectMapper.findAndRegisterModules();
 
         log.info("Jackson ObjectMapper配置完成");
         return objectMapper;

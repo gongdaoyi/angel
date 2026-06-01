@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.angel.mapper.DictMapper">
+    <select id="qryDict" resultType="com.alibaba.fastjson.JSONObject">
+        select distinct a.scan_arch_no, b.dict_prompt, c.report_name
+        FROM gfarch.scanarcharg a
+                 left join gfuser.sysdictionary b on a.scan_arch_no = b.subentry and dict_entry = 600003
+                 left join gfuser.reportparam c on a.scan_arch_no = c.scanarch_no
+        WHERE a.scan_arch_no = #{scanArchNo}
+    </select>
+</mapper>

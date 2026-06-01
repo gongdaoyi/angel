@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface MybatisMapper {
+public interface DictMapper {
 
-    JSONObject qryNationalityDict(@Param("subentry") String subentry);
+    JSONObject qryDict(@Param("scanArchNo") String scanArchNo);
 
 }

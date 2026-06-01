@@ -1,11 +1,10 @@
 package com.test;
 
-import com.alibaba.fastjson.JSONObject;
-
 public class StringTest {
-    public static void main(String[] args) {
-        JSONObject json = new JSONObject();
-        json.put("remark", "null");
 
+    public static void main(String[] args) {
+        String a = ",";
+
+        System.out.println(a.split(",").length);
     }
 }
